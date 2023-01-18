@@ -1,2 +1,2 @@
 # Algotims
-Here I develop and test different algorithms
+:computer: :blue_book: :triangular_ruler: > Here I develop and test different algorithms
