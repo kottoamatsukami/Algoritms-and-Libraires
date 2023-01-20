@@ -1,4 +1,6 @@
 import random
+import math
+
 
 class Matrix:
     def __init__(self, n_rows: int, n_cols: int, body=None) -> None:
@@ -76,3 +78,12 @@ class Vector(Matrix):
             super().__init__(n_rows=n, n_cols=1, body=body)
         else:
             super().__init__(n_rows=1, n_cols=n, body=body)
+
+
+class RotateMatrixR2(Matrix):
+    def __init__(self):
+        super().__init__(n_rows=2, n_cols=2, body=[
+                         [math.cos, -math.sin],
+                         [math.sin, math.cos],
+                         ])
+
