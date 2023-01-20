@@ -2,6 +2,12 @@ import random
 import math
 
 
+# Globals
+
+MAX_RAND =  5
+MIN_RAND = -5
+
+
 class Matrix:
     def __init__(self, n_rows: int, n_cols: int, body=None) -> None:
         self.rows = n_rows
@@ -13,7 +19,8 @@ class Matrix:
     def __init_with_random(self):
         for cur_row in range(self.rows):
             for cur_col in range(self.cols):
-                self.body[cur_row][cur_col] = random.randint(-100, 100)
+                self.body[cur_row][cur_col] = random.randint(MIN_RAND, MAX_RAND)
+
 
     def __repr__(self) -> str:
         out = "Matrix:\n"
@@ -79,11 +86,31 @@ class Vector(Matrix):
         else:
             super().__init__(n_rows=1, n_cols=n, body=body)
 
+class LinearTransformation(Matrix):
+    def __init__(self, n_rows: int, n_cols: int, body=None):
+        super().__init__(n_rows=n_rows, n_cols=n_cols, body=body)
 
-class RotateMatrixR2(Matrix):
+
+class RotateMatrixR2(LinearTransformation):
     def __init__(self):
-        super().__init__(n_rows=2, n_cols=2, body=[
-                         [math.cos, -math.sin],
-                         [math.sin, math.cos],
-                         ])
+        super().__init__(n_rows=2, n_cols=2, body=[[None, None], [None, None]])
 
+    def init_angle(self, alpha: float):
+        alpha = math.radians(alpha)
+        print(alpha)
+        self.body = [
+            [math.cos(alpha), -math.sin(alpha)],
+            [math.sin(alpha), math.cos(alpha)],
+        ]
+
+    def transform(self, v: Vector, alpha=None):
+        if alpha is not None:
+            self.init_angle(alpha)
+        return self*v
+
+
+test_vector = Vector(True, 2)
+print(test_vector)
+rot_matrix = RotateMatrixR2()
+rot_matrix.init_angle(180)
+print(rot_matrix.transform(test_vector))
