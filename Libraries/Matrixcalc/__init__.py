@@ -4,8 +4,8 @@ import math
 
 # Globals
 
-MAX_RAND =  5
-MIN_RAND = -5
+MAX_RAND =  1
+MIN_RAND = -1
 
 
 class Matrix:
@@ -36,11 +36,13 @@ class Matrix:
         temp = self.body[i]
         self.set_row(i, self.body[j])
         self.set_row(j, temp)
+        return self
 
     def swipe_column(self, i: int, j: int):
         temp = self.get_column(i)
         self.set_column(i, self.get_column(j))
         self.set_column(j, temp)
+        return self
 
     def get_row(self, i: int):
         return self.body[i]
@@ -51,6 +53,16 @@ class Matrix:
             out.append(self.body[j][i])
         return out
 
+    def mult_col(self, i: int, a:float):
+        col = self.get_column(i)
+        col = list(map(lambda x: x * a, col))
+        self.set_column(i, col)
+        return self
+    def mult_row(self, i: int, a:float):
+        row = self.get_row(i)
+        row = list(map(lambda x: x * a, row))
+        self.set_row(i, row)
+        return self
 
     def __init_with_random(self):
         for cur_row in range(self.rows):
