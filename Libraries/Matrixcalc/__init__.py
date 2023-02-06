@@ -16,11 +16,46 @@ class Matrix:
         if body is None:
             self.__init_with_random()
 
+
+    def set_row(self, i: int, new_row: list):
+        if isinstance(new_row, list):
+            assert len(new_row) == self.cols, "Length of new row must be equal to number of columns"
+            self.body[i] = new_row
+        else:
+            raise TypeError(f"Expected list, got {type(new_row)}")
+
+    def set_column(self, i: int, new_column: list):
+        if isinstance(new_column, list):
+            assert len(new_column) == self.rows, "Length of new column must be equal to number of rows"
+            for j in range(self.rows):
+                self.body[j][i] = new_column[j]
+        else:
+            raise TypeError(f"Expected list, got {type(new_column)}")
+
+    def swipe_row(self, i: int, j: int):
+        temp = self.body[i]
+        self.set_row(i, self.body[j])
+        self.set_row(j, temp)
+
+    def swipe_column(self, i: int, j: int):
+        temp = self.get_column(i)
+        self.set_column(i, self.get_column(j))
+        self.set_column(j, temp)
+
+    def get_row(self, i: int):
+        return self.body[i]
+
+    def get_column(self, i: int):
+        out = []
+        for j in range(self.rows):
+            out.append(self.body[j][i])
+        return out
+
+
     def __init_with_random(self):
         for cur_row in range(self.rows):
             for cur_col in range(self.cols):
                 self.body[cur_row][cur_col] = random.randint(MIN_RAND, MAX_RAND)
-
 
     def __repr__(self) -> str:
         out = "Matrix:\n"
@@ -34,7 +69,7 @@ class Matrix:
 
         for cur_row in range(self.rows):
             for cur_col in range(self.cols):
-                out += str(self.body[cur_row][cur_col]).center(n, " ") + " "
+                out += str(self.body[cur_row][cur_col]).rjust(n, " ") + " "
             out += "\n"
         return out
 
@@ -107,10 +142,3 @@ class RotateMatrixR2(LinearTransformation):
         if alpha is not None:
             self.init_angle(alpha)
         return self*v
-
-
-test_vector = Vector(True, 2)
-print(test_vector)
-rot_matrix = RotateMatrixR2()
-rot_matrix.init_angle(180)
-print(rot_matrix.transform(test_vector))
