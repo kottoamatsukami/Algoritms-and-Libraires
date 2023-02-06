@@ -111,34 +111,3 @@ class Matrix:
                 for ind_y in range(self.cols):
                     new[ind_x][ind_y] = self.body[ind_x][ind_y] - other.body[ind_x][ind_y]
             return new
-
-
-class Vector(Matrix):
-    def __init__(self, vertical: bool, n: int, body=None):
-        self.vertical = vertical
-        if self.vertical:
-            super().__init__(n_rows=n, n_cols=1, body=body)
-        else:
-            super().__init__(n_rows=1, n_cols=n, body=body)
-
-class LinearTransformation(Matrix):
-    def __init__(self, n_rows: int, n_cols: int, body=None):
-        super().__init__(n_rows=n_rows, n_cols=n_cols, body=body)
-
-
-class RotateMatrixR2(LinearTransformation):
-    def __init__(self):
-        super().__init__(n_rows=2, n_cols=2, body=[[None, None], [None, None]])
-
-    def init_angle(self, alpha: float):
-        alpha = math.radians(alpha)
-        print(alpha)
-        self.body = [
-            [math.cos(alpha), -math.sin(alpha)],
-            [math.sin(alpha), math.cos(alpha)],
-        ]
-
-    def transform(self, v: Vector, alpha=None):
-        if alpha is not None:
-            self.init_angle(alpha)
-        return self*v
