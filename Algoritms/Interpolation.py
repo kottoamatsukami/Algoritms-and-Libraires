@@ -18,13 +18,12 @@ def xrange(start, stop, step: float):
             yield out
 
 def f(x):
-    x %= 2*3.141592
-    return math.tan(x)
+    return math.cos(1/x)
 
 
 
 graph = {
-    x: f(x) for x in xrange(-2, 2, 0.2)
+    x: f(x) for x in xrange(-3, 3, 0.01)
 }
 
 X = np.array(list(graph.keys()))
