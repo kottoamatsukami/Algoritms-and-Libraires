@@ -1,4 +1,4 @@
-from Libraries.Matrixcalc import Matrix
+from Libraries.matrixcalc import Matrix
 
 
 def GaussianMethod(M: Matrix)->Matrix:
