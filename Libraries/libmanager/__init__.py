@@ -1,7 +1,6 @@
 import subprocess
 import os
 import git
-import glob
 import shutil
 import stat
 
